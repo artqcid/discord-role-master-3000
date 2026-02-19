@@ -26,6 +26,8 @@
             v-for="ch in channelsByCategory(cat.id)"
             :key="ch.id"
             class="channel-item"
+            :class="{ active: selectedChannel?.id === ch.id }"
+            @click="selectChannel(ch)"
           >
             <span class="channel-icon">{{ channelIcon(ch.type) }}</span>
             <span class="channel-label">{{ ch.name }}</span>
@@ -34,7 +36,13 @@
 
         <div v-if="uncategorized.length" class="category-block">
           <div class="category-name">— Ohne Kategorie —</div>
-          <div v-for="ch in uncategorized" :key="ch.id" class="channel-item">
+          <div 
+            v-for="ch in uncategorized" 
+            :key="ch.id" 
+            class="channel-item"
+            :class="{ active: selectedChannel?.id === ch.id }"
+            @click="selectChannel(ch)"
+          >
             <span class="channel-icon">{{ channelIcon(ch.type) }}</span>
             <span class="channel-label">{{ ch.name }}</span>
           </div>
@@ -42,7 +50,34 @@
       </aside>
 
       <main class="main-content">
-        <p class="welcome-text">
+        <div v-if="selectedChannel" class="channel-details">
+            <h2>{{ channelIcon(selectedChannel.type) }} {{ selectedChannel.name }}</h2>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label>ID</label>
+                    <span>{{ selectedChannel.id }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Typ</label>
+                    <span>{{ selectedChannel.type }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Position</label>
+                    <span>{{ selectedChannel.position }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Kategorie</label>
+                    <span>{{ selectedChannel.category_id || 'Keine' }}</span>
+                </div>
+            </div>
+            
+            <div class="nsfw-badge" v-if="selectedChannel.nsfw">🔞 NSFW</div>
+            
+            <div class="actions">
+                <router-link to="/channels" class="btn-manage">Berechtigungen verwalten</router-link>
+            </div>
+        </div>
+        <p v-else class="welcome-text">
           Wähle einen Kanal aus, um Details zu sehen.
         </p>
       </main>
@@ -51,12 +86,17 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useServerStore } from '@/stores/serverStore.js'
 
 const store = useServerStore()
+const selectedChannel = ref(null)
 
 onMounted(() => store.loadAll())
+
+function selectChannel(channel) {
+    selectedChannel.value = channel
+}
 
 const CHANNEL_ICONS = {
   text: '#',
@@ -66,6 +106,7 @@ const CHANNEL_ICONS = {
   announcement: '📢',
   unknown: '?',
 }
+
 
 function channelIcon(type) {
   return CHANNEL_ICONS[type] ?? CHANNEL_ICONS.unknown
@@ -147,7 +188,7 @@ const uncategorized = computed(() =>
   transition: background 0.15s, color 0.15s;
 }
 
-.channel-item:hover {
+.channel-item:hover, .channel-item.active {
   background: var(--color-hover);
   color: var(--color-text-primary);
 }
@@ -187,5 +228,55 @@ const uncategorized = computed(() =>
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.detail-item {
+    background: var(--color-bg-sidebar);
+    padding: 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-item label {
+    font-size: 0.7em;
+    color: var(--color-text-muted);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.nsfw-badge {
+    display: inline-block;
+    background: #ed4245;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    margin-top: 1rem;
+}
+
+.actions {
+    margin-top: 2rem;
+}
+
+.btn-manage {
+    display: inline-block;
+    background: var(--color-accent);
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.btn-manage:hover {
+    background: var(--color-accent-hover);
 }
 </style>

@@ -12,6 +12,24 @@
             <span>Dashboard</span>
           </RouterLink>
         </li>
+        <li>
+          <RouterLink to="/roles" class="nav-link" active-class="nav-link--active">
+            <span class="nav-icon">🎭</span>
+            <span>Rollen</span>
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/categories" class="nav-link" active-class="nav-link--active">
+            <span class="nav-icon">📂</span>
+            <span>Kategorien</span>
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/channels" class="nav-link" active-class="nav-link--active">
+            <span class="nav-icon">💬</span>
+            <span>Kanäle</span>
+          </RouterLink>
+        </li>
       </ul>
     </nav>
     <div class="content-area">
@@ -121,6 +139,7 @@ body { background: var(--color-bg-dark); }
 .content-area {
   flex: 1;
   display: flex;
+  flex-direction: column;
   overflow: hidden;
   background: var(--color-bg-content);
 }

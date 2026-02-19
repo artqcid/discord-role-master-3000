@@ -10,17 +10,29 @@ const apiClient = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
-export async function fetchGuild() {
-  const response = await apiClient.get('/guild')
-  return response.data
-}
-
-export async function fetchCategories() {
-  const response = await apiClient.get('/categories')
-  return response.data
-}
-
-export async function fetchChannels() {
-  const response = await apiClient.get('/channels')
-  return response.data
+export default {
+  getGuild() {
+    return apiClient.get('/guild')
+  },
+  getRoles() {
+    return apiClient.get('/roles')
+  },
+  getCategories() {
+    return apiClient.get('/categories')
+  },
+  getChannels() {
+    return apiClient.get('/channels')
+  },
+  updateRole(roleId, data) {
+    return apiClient.patch(`/roles/${roleId}`, data)
+  },
+  upsertOverwrite(channelId, targetId, data) {
+    return apiClient.put(`/channels/${channelId}/overwrites/${targetId}`, data)
+  },
+  deleteOverwrite(channelId, targetId) {
+    return apiClient.delete(`/channels/${channelId}/overwrites/${targetId}`)
+  },
+  getConflicts() {
+    return apiClient.get('/conflicts')
+  }
 }

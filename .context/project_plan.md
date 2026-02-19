@@ -1,6 +1,6 @@
 # Discord Role Master 3000 – Projektplan
 
-> **Status:** Planungsphase · **Erstellt:** 2026-02-19
+> **Status:** In Entwicklung (Schritt 1 abgeschlossen) · **Erstellt:** 2026-02-19
 > **Kontext-Dateien:** [`tech_stack.md`](tech_stack.md) · [`architecture.md`](architecture.md) · [`data_model.md`](data_model.md) · [`api_reference.md`](api_reference.md) · [`AGENT_SYSTEM_PROMPT.md`](AGENT_SYSTEM_PROMPT.md)
 
 ---
@@ -34,47 +34,51 @@ Eine lokal laufende Web-App, die:
 
 #### Setup
 - [x] Git-Repository vorhanden
-- [ ] `/backend`, `/frontend`, `/docs` Ordner anlegen
-- [ ] `.gitignore` (Python + Node), `.env.example` (`DISCORD_BOT_TOKEN`, `GUILD_ID`, `DATABASE_URL`)
-- [ ] `README.md` mit lokalem Setup-Guide
+- [x] `/backend`, `/frontend`, `/docs` Ordner anlegen
+- [x] `.gitignore` (Python + Node), `.env.example` (`DISCORD_BOT_TOKEN`, `GUILD_ID`, `DATABASE_URL`)
+- [x] `README.md` mit lokalem Setup-Guide
 
 #### Backend – Grundgerüst
-- [ ] Python `venv` + `requirements.txt` (siehe [`tech_stack.md`](tech_stack.md))
-- [ ] `backend/config.py` – Settings aus `.env` (pydantic-settings)
-- [ ] `backend/database.py` – Async SQLAlchemy Engine, `get_db()`
-- [ ] `backend/main.py` – App-Factory, CORS für `localhost:5173`, Router einbinden
+- [x] Python `venv` + `requirements.txt` (Anpassung: Python 3.14 Support, `discord.py>=2.4.0`)
+- [x] `backend/config.py` – Settings aus `.env` (pydantic-settings)
+- [x] `backend/database.py` – Async SQLAlchemy Engine, `get_db()`
+- [x] `backend/main.py` – App-Factory, CORS für `localhost:5173`, Router einbinden
 
 #### Backend – Modelle (Subset Schritt 1)
-- [ ] `backend/models/guild.py` – `Guild`
-- [ ] `backend/models/category.py` – `Category`
-- [ ] `backend/models/channel.py` – `Channel`
-- [ ] `backend/models/__init__.py` – alle importieren, `create_all()` beim Start
+- [x] `backend/models/guild.py` – `Guild`
+- [x] `backend/models/category.py` – `Category`
+- [x] `backend/models/channel.py` – `Channel`
+- [x] `backend/models/__init__.py` – alle importieren, `create_all()` beim Start
 
 #### Backend – Discord Bot
-- [ ] `backend/bot/client.py` – Bot-Client initialisieren
-- [ ] `backend/bot/sync.py` – `initial_sync(guild)`: Guild, Kategorien, Kanäle in DB schreiben
-- [ ] `on_ready` → `initial_sync()` aufrufen
-- [ ] Bot als asyncio Background-Task in FastAPI integrieren
+- [x] `backend/bot/client.py` – Bot-Client initialisieren
+- [x] `backend/bot/sync.py` – `initial_sync(guild)`: Guild, Kategorien, Kanäle in DB schreiben
+- [x] `on_ready` → `initial_sync()` aufrufen
+- [x] Bot als asyncio Background-Task in FastAPI integrieren
 
 #### Backend – API (siehe [`api_reference.md`](api_reference.md))
-- [ ] `backend/schemas/` – Pydantic Response-Schemas für Guild, Category, Channel
-- [ ] `backend/routers/guild.py` – `GET /api/guild`
-- [ ] `backend/routers/categories.py` – `GET /api/categories`
-- [ ] `backend/routers/channels.py` – `GET /api/channels`
+- [x] `backend/schemas/` – Pydantic Response-Schemas für Guild, Category, Channel
+- [x] `backend/routers/guild.py` – `GET /api/guild`
+- [x] `backend/routers/categories.py` – `GET /api/categories`
+- [x] `backend/routers/channels.py` – `GET /api/channels`
 
 #### Frontend
-- [ ] Vue 3 + Vite initialisieren (`npm create vue@latest frontend`)
-- [ ] Dependencies installieren (siehe [`tech_stack.md`](tech_stack.md))
-- [ ] `src/api/index.js` – Axios-Instanz mit `baseURL`
-- [ ] `src/stores/serverStore.js` – State: `guildInfo`, `categories`, `channels`
-- [ ] `src/views/DashboardView.vue` – Servername, Kategorien-Liste, Kanäle gruppiert
-- [ ] `App.vue` – Sidebar-Layout, dunkles Theme (Discord-Farbpalette)
+- [x] Vue 3 + Vite initialisieren (`npm create vue@latest frontend`)
+- [x] Dependencies installieren (siehe [`tech_stack.md`](tech_stack.md))
+- [x] `src/api/index.js` – Axios-Instanz mit `baseURL`
+- [x] `src/stores/serverStore.js` – State: `guildInfo`, `categories`, `channels`
+- [x] `src/views/DashboardView.vue` – Servername, Kategorien-Liste, Kanäle gruppiert
+- [x] `App.vue` – Sidebar-Layout, dunkles Theme (Discord-Farbpalette)
 
 #### Abnahme-Kriterien Schritt 1
-- [ ] `uvicorn backend.main:app --reload` läuft fehlerfrei
-- [ ] Bot loggt `on_ready`, SQLite-Datei `discord_rm.db` wird befüllt
-- [ ] `/docs` (Swagger) zeigt alle 3 Endpunkte, Antworten korrekt
-- [ ] `npm run dev` läuft, Browser zeigt Servername + Kategorien + Kanäle
+- [x] `uvicorn backend.main:app --reload` läuft fehlerfrei
+- [x] Bot loggt `on_ready`, SQLite-Datei `discord_rm.db` wird befüllt
+- [x] `/docs` (Swagger) zeigt alle 3 Endpunkte, Antworten korrekt
+- [x] `npm run dev` läuft, Browser zeigt Servername + Kategorien + Kanäle
+
+> **Abweichungen:**
+> - Python 3.14 erfordert `discord.py>=2.4.0` und `sqlalchemy>=2.0.36`.
+> - VS Code Tasks & Wrapper-Scripts hinzugefügt.
 
 ---
 

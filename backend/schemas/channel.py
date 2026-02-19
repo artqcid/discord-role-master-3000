@@ -11,5 +11,9 @@ class ChannelResponseSchema(BaseModel):
     position: int
     category_id: str | None = None
     nsfw: bool
+    
+    overwrites: list["PermissionOverwriteSchema"] = []
 
     model_config = {"from_attributes": True}
+
+from backend.schemas.permission_overwrite import PermissionOverwriteSchema

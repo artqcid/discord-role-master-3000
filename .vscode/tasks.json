@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Backend",
+            "label": "🐍 Backend starten",
             "type": "shell",
             "command": "powershell.exe",
             "args": [
@@ -25,7 +25,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Frontend",
+            "label": "🎨 Frontend starten",
             "type": "shell",
             "command": "powershell.exe",
             "args": [
@@ -48,10 +48,10 @@
             "problemMatcher": []
         },
         {
-            "label": "Backend + Frontend",
+            "label": "🚀 Alles starten (Backend + Frontend)",
             "dependsOn": [
-                "Backend",
-                "Frontend"
+                "🐍 Backend starten",
+                "🎨 Frontend starten"
             ],
             "dependsOrder": "parallel",
             "group": {
@@ -61,54 +61,79 @@
             "problemMatcher": []
         },
         {
-            "label": "Stoppe Backend",
+            "label": "🛑 Backend beenden",
             "type": "shell",
-            "command": "Get-Process uvicorn -ErrorAction SilentlyContinue | Stop-Process -Force; Write-Host '✓ Backend gestoppt.' -ForegroundColor Green",
+            "command": "powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}\\scripts\\stop-backend.ps1"
+            ],
             "options": {
-                "cwd": "${workspaceFolder}",
-                "shell": {
-                    "executable": "powershell.exe",
-                    "args": [
-                        "-NoProfile",
-                        "-Command"
-                    ]
-                }
+                "cwd": "${workspaceFolder}"
             },
             "presentation": {
-                "reveal": "always",
+                "reveal": "silent",
                 "panel": "shared",
-                "showReuseMessage": false
+                "close": true
             },
+            "group": "none",
             "problemMatcher": []
         },
         {
-            "label": "Stoppe Frontend",
+            "label": "🛑 Frontend beenden",
             "type": "shell",
-            "command": "Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force; Write-Host '✓ Frontend gestoppt.' -ForegroundColor Green",
+            "command": "powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}\\scripts\\stop-frontend.ps1"
+            ],
             "options": {
-                "cwd": "${workspaceFolder}",
-                "shell": {
-                    "executable": "powershell.exe",
-                    "args": [
-                        "-NoProfile",
-                        "-Command"
-                    ]
-                }
+                "cwd": "${workspaceFolder}"
             },
             "presentation": {
-                "reveal": "always",
+                "reveal": "silent",
                 "panel": "shared",
-                "showReuseMessage": false
+                "close": true
             },
+            "group": "none",
             "problemMatcher": []
         },
         {
-            "label": "Stoppe Alles",
+            "label": "🛑 Alles beenden",
             "dependsOn": [
-                "Stoppe Backend",
-                "Stoppe Frontend"
+                "🛑 Backend beenden",
+                "🛑 Frontend beenden"
             ],
             "dependsOrder": "parallel",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
+            "label": "▶ Tests ausführen",
+            "type": "shell",
+            "command": "python -m pytest",
+            "args": [
+                "backend/tests"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": true,
+                "group": "test"
+            },
+            "group": "test",
             "problemMatcher": []
         }
     ]

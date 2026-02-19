@@ -2,5 +2,7 @@
 from backend.models.guild import Guild
 from backend.models.category import Category
 from backend.models.channel import Channel
+from backend.models.role import Role
+from backend.models.permission_overwrite import PermissionOverwrite
 
-__all__ = ["Guild", "Category", "Channel"]
+__all__ = ["Guild", "Category", "Channel", "Role", "PermissionOverwrite"]

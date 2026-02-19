@@ -1,6 +1,6 @@
 """Channel SQLAlchemy model."""
 from sqlalchemy import Boolean, ForeignKey, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.database import Base
 
@@ -21,3 +21,5 @@ class Channel(Base):
     type: Mapped[str] = mapped_column(String, nullable=False)
     position: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     nsfw: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+
+    overwrites = relationship("PermissionOverwrite", back_populates="channel", cascade="all, delete-orphan")

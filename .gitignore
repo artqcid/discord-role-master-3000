@@ -32,8 +32,15 @@ Thumbs.db
 # Logs
 *.log
 
-# Agent Context
-.context/
+# Agent Context (Tracked)
+# .context/ is tracked now
 
 # IDE Exceptions
 !.vscode/tasks.json
+
+# Debug and Temporary
+guild.json
+response*.txt
+simple_server.py
+pytest.ini
+backend/debug_routes.py
