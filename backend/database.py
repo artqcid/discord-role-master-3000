@@ -1,0 +1,27 @@
+"""Async SQLAlchemy engine, session factory and FastAPI dependency."""
+from collections.abc import AsyncGenerator
+
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.orm import DeclarativeBase
+
+from backend.config import get_settings
+
+_settings = get_settings()
+
+engine = create_async_engine(_settings.database_url, echo=False)
+
+AsyncSessionLocal = async_sessionmaker(
+    bind=engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+)
+
+
+class Base(DeclarativeBase):
+    """Shared declarative base for all SQLAlchemy models."""
+
+
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    """FastAPI dependency: yields an async DB session per request."""
+    async with AsyncSessionLocal() as session:
+        yield session

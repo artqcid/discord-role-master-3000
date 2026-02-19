@@ -1,0 +1,39 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
+
+# Environment
+.env
+
+# Database
+discord_rm.db
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Agent Context
+.context/
+
+# IDE Exceptions
+!.vscode/tasks.json

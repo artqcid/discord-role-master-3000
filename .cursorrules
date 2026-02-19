@@ -1,0 +1,43 @@
+# Discord Role Master 3000 - Model Context Protocol
+
+This file configures the Agent's behavior and context awareness for the Discord Role Master 3000 project.
+
+## 🚨 MANDATORY CONTEXT
+**BEFORE EVERY ACTION**, the Agent MUST consult the following files in `.context/`:
+
+1.  **`project_plan.md`** (The Bible):
+    -   Contains the **current project status** and **active task list**.
+    -   Agent MUST check off tasks here as they are completed.
+2.  **`AGENT_SYSTEM_PROMPT.md`** ( The Law):
+    -   Contains **coding standards (CCD)**, **naming conventions**, and **QA checklists**.
+    -   Agent MUST follow these rules strictly.
+3.  **`architecture.md`** (The Map):
+    -   Contains **folder structure**, **layer boundaries**, and **forbidden imports**.
+    -   Agent MUST NOT violate these constraints.
+
+## 🧠 KNOWLEDGE BASE (Reference as needed)
+-   `tech_stack.md`: Precise library versions and setup commands.
+-   `data_model.md`: Database schema and relationships.
+-   `api_reference.md`: API endpoints, request/response formats.
+-   `discord_permissions.md`: Domain logic for Discord permissions.
+
+## ⚡ WORKFLOW RULES
+1.  **Thinking Process**:
+    -   Acknowledge the current task from `project_plan.md`.
+    -   Verify the architectural constraints in `architecture.md`.
+    -   Plan the implementation according to `AGENT_SYSTEM_PROMPT.md` (CCD).
+2.  **Implementation**:
+    -   Write clean, modular code.
+    -   Adhere to strict **file size limits** (300 lines) and **function size limits** (30 lines).
+    -   Use **Pydantic schemas** for all data exchange.
+3.  **Documentation**:
+    -   Update `.context/` files immediately if the code changes divergent from the plan.
+
+
+## 🛑 AUTO-REFUSAL
+The Agent shall **REFUSE** to:
+-   Write code without first explaining the plan.
+-   Implement features not in the active task list (YAGNI).
+-   Violate the layer architecture (e.g., SQL in Routers).
+
+
