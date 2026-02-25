@@ -44,3 +44,7 @@ response*.txt
 simple_server.py
 pytest.ini
 backend/debug_routes.py
+
+# Local MCP Config (Security)
+.gemini/
+
